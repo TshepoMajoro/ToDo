@@ -1,6 +1,7 @@
 package org.springtech.todo.Services;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springtech.todo.DTOs.TaskRequest;
 import org.springtech.todo.DTOs.TaskResponse;
 import org.springtech.todo.Entities.Task;
@@ -17,10 +18,12 @@ public class TaskService {
         repository = repo;
     }
 
+    @Transactional
     public List<TaskResponse> getAllTasks(){
         return repository.findAll().stream().map(task -> mapTaskToTaskReponse(task)).toList();
     }
 
+    @Transactional
     public TaskResponse getTaskById(long id) throws ResourceNotFoundException {
         if (!repository.existsById(id)){
             throw new ResourceNotFoundException("Task of Id "+id+" does not exist");
@@ -29,6 +32,7 @@ public class TaskService {
         return mapTaskToTaskReponse(task);
     }
 
+    @Transactional
     public TaskResponse getTaskByTitle(String title) throws ResourceNotFoundException {
         if (!repository.existsByTitle(title)){
             throw new ResourceNotFoundException("Task of Title "+title+" does not exist");
@@ -37,11 +41,13 @@ public class TaskService {
         return mapTaskToTaskReponse(task);
     }
 
+    @Transactional
     public void addNewTask(TaskRequest task){
         Task _task = mapTaskRequestToTask(task);
         repository.save(_task);
     }
 
+    @Transactional
     public void deleteTaskById(long id) throws ResourceNotFoundException {
         if (!repository.existsById(id)){
             throw new ResourceNotFoundException("Task of Id "+id+" does not exist");
@@ -49,6 +55,7 @@ public class TaskService {
         repository.deleteById(id);
     }
 
+    @Transactional
     public void deleteTaskByTitle(String title) throws ResourceNotFoundException {
         if (!repository.existsByTitle(title)){
             throw new ResourceNotFoundException("Task of Title "+title+" does not exist");
