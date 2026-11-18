@@ -63,6 +63,16 @@ public class TaskService {
         repository.deleteByTitle(title);
     }
 
+    @Transactional
+    public void updateTask(long id, TaskRequest updatedTask) throws ResourceNotFoundException {
+        if (!repository.existsById(id)){
+            throw new ResourceNotFoundException("Task of Id "+id+" does not exist");
+        }
+        Task task = mapTaskRequestToTask(updatedTask);
+        task.setId(id);
+        repository.save(task);
+    }
+
     private Task mapTaskRequestToTask(TaskRequest task){
         Task _task = new Task();
         _task.setTitle(task.title());

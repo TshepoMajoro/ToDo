@@ -25,13 +25,13 @@ public class TaskController {
         return ResponseEntity.ok(taskService.getAllTasks());
     }
 
-    @GetMapping("/id/{id}")
-    public ResponseEntity<TaskResponse> getById(@PathVariable long id) throws ResourceNotFoundException {
+    @GetMapping
+    public ResponseEntity<TaskResponse> getById(@RequestParam long id) throws ResourceNotFoundException {
         return ResponseEntity.ok(taskService.getTaskById(id));
     }
 
-    @GetMapping("/title/{title}")
-    public ResponseEntity<TaskResponse> getByTile(@PathVariable String title) throws ResourceNotFoundException {
+    @GetMapping
+    public ResponseEntity<TaskResponse> getByTile(@RequestParam String title) throws ResourceNotFoundException {
         return ResponseEntity.ok(taskService.getTaskByTitle(title));
     }
 
@@ -41,15 +41,21 @@ public class TaskController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @DeleteMapping("/id/{id}")
-    public ResponseEntity<Void> deleteTaskById(@PathVariable long id) throws ResourceNotFoundException {
+    @DeleteMapping
+    public ResponseEntity<Void> deleteTaskById(@RequestParam long id) throws ResourceNotFoundException {
         taskService.deleteTaskById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @DeleteMapping("/title/{title}")
-    public ResponseEntity<Void> deleteTaskByTitle(@PathVariable String title) throws ResourceNotFoundException {
+    @DeleteMapping
+    public ResponseEntity<Void> deleteTaskByTitle(@RequestParam String title) throws ResourceNotFoundException {
         taskService.deleteTaskByTitle(title);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> updateTask(@PathVariable long id,@Valid @RequestBody TaskRequest task) throws ResourceNotFoundException {
+        taskService.updateTask(id, task);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
