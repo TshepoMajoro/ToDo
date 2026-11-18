@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 @Getter
 @Setter
@@ -16,11 +17,11 @@ import java.time.LocalDateTime;
 public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    @Column
+    private Long id;
+    @Column(name = "title", unique = true)
     private String title;
-    @Column
+    @Column(name = "description")
     private String description;
-    @Column
-    private LocalDateTime deadline;
+    @Column(name = "due")
+    private LocalDate due;
 }
