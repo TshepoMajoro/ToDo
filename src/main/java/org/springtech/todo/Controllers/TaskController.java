@@ -25,12 +25,12 @@ public class TaskController {
         return ResponseEntity.ok(taskService.getAllTasks());
     }
 
-    @GetMapping
+    @GetMapping(params = "id")
     public ResponseEntity<TaskResponse> getById(@RequestParam long id) throws ResourceNotFoundException {
         return ResponseEntity.ok(taskService.getTaskById(id));
     }
 
-    @GetMapping
+    @GetMapping(params = "title")
     public ResponseEntity<TaskResponse> getByTile(@RequestParam String title) throws ResourceNotFoundException {
         return ResponseEntity.ok(taskService.getTaskByTitle(title));
     }
@@ -41,13 +41,13 @@ public class TaskController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @DeleteMapping
+    @DeleteMapping(params = "id")
     public ResponseEntity<Void> deleteTaskById(@RequestParam long id) throws ResourceNotFoundException {
         taskService.deleteTaskById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @DeleteMapping
+    @DeleteMapping(params = "title")
     public ResponseEntity<Void> deleteTaskByTitle(@RequestParam String title) throws ResourceNotFoundException {
         taskService.deleteTaskByTitle(title);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
