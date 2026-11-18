@@ -42,13 +42,13 @@ public class TaskController {
     }
 
     @DeleteMapping("/id/{id}")
-    public ResponseEntity<Void> deleteTaskById(long id) throws ResourceNotFoundException {
+    public ResponseEntity<Void> deleteTaskById(@PathVariable long id) throws ResourceNotFoundException {
         taskService.deleteTaskById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @DeleteMapping("/title/{title}")
-    public ResponseEntity<Void> deleteTaskByTitle(String title) throws ResourceNotFoundException {
+    public ResponseEntity<Void> deleteTaskByTitle(@PathVariable String title) throws ResourceNotFoundException {
         taskService.deleteTaskByTitle(title);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
