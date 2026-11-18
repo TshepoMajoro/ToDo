@@ -2,6 +2,7 @@ package org.springtech.todo.Services;
 
 import org.springframework.stereotype.Service;
 import org.springtech.todo.Entities.Task;
+import org.springtech.todo.Exceptions.ResourceNotFoundException;
 import org.springtech.todo.Repository.TaskRepository;
 
 import java.util.List;
@@ -18,14 +19,14 @@ public class TaskService {
         return repository.findAll();
     }
 
-    public Task getTaskById(long id){
+    public Task getTaskById(long id) throws ResourceNotFoundException {
         if (!repository.existsById(id)){
             throw new ResourceNotFoundException("Task of Id "+id+" does not exist");
         }
         return repository.findById(id).get();
     }
 
-    public Task getTaskByTitle(String title){
+    public Task getTaskByTitle(String title) throws ResourceNotFoundException {
         if (!repository.existsByTitle(title)){
             throw new ResourceNotFoundException("Task of Title "+title+" does not exist");
         }
