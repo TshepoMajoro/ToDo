@@ -6,7 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springtech.todo.DTOs.TaskRequest;
 import org.springtech.todo.DTOs.TaskResponse;
-import org.springtech.todo.Entities.Task;
 import org.springtech.todo.Exceptions.ResourceNotFoundException;
 import org.springtech.todo.Services.TaskService;
 
@@ -37,7 +36,7 @@ public class TaskController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> createTask(@Valid @RequestParam TaskRequest task){
+    public ResponseEntity<Void> createTask(@Valid @RequestBody TaskRequest task){
         taskService.addNewTask(task);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
