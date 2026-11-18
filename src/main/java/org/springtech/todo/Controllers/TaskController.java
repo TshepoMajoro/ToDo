@@ -1,10 +1,11 @@
 package org.springtech.todo.Controllers;
 
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springtech.todo.DTOs.TaskRequest;
+import org.springtech.todo.DTOs.TaskResponse;
 import org.springtech.todo.Entities.Task;
 import org.springtech.todo.Exceptions.ResourceNotFoundException;
 import org.springtech.todo.Services.TaskService;
@@ -21,17 +22,35 @@ public class TaskController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Task>> getAll(){
+    public ResponseEntity<List<TaskResponse>> getAll(){
         return ResponseEntity.ok(taskService.getAllTasks());
     }
 
     @GetMapping("/id/{id}")
-    public ResponseEntity<Task> getById(@PathVariable long id) throws ResourceNotFoundException {
+    public ResponseEntity<TaskResponse> getById(@PathVariable long id) throws ResourceNotFoundException {
         return ResponseEntity.ok(taskService.getTaskById(id));
     }
 
     @GetMapping("/title/{title}")
-    public ResponseEntity<Task> getByTile(@PathVariable String title) throws ResourceNotFoundException {
+    public ResponseEntity<TaskResponse> getByTile(@PathVariable String title) throws ResourceNotFoundException {
         return ResponseEntity.ok(taskService.getTaskByTitle(title));
+    }
+
+    @PostMapping
+    public ResponseEntity<Void> createTask(@Valid @RequestParam TaskRequest task){
+        taskService.addNewTask(task);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @DeleteMapping("/id/{id}")
+    public ResponseEntity<Void> deleteTaskById(long id) throws ResourceNotFoundException {
+        taskService.deleteTaskById(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @DeleteMapping("/title/{title}")
+    public ResponseEntity<Void> deleteTaskByTitle(String title) throws ResourceNotFoundException {
+        taskService.deleteTaskByTitle(title);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

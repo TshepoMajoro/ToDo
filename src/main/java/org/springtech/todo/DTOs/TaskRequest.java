@@ -1,4 +1,5 @@
 package org.springtech.todo.DTOs;
+import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
@@ -12,6 +13,7 @@ public record TaskRequest(
         @Size(min = 10, max = 50, message = "Description cannot be less than 10 characters or more than 50 characters.")
         String description,
         @NotNull(message = "Due date is a required field.")
+        @Future
         LocalDate due
 ) {
 }
